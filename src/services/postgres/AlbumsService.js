@@ -74,9 +74,13 @@ class AlbumsService {
             text: 'SELECT id, title, performer FROM songs WHERE album_id = $1',
             values: [id]
         }
+        
+        const result = await this._pool.query(query)
 
-        const result = await this._pool.query(query);
-
+        if (!result.rows.length) {
+            throw new NotFoundError('Song tidak ditemukan');
+        }
+    
         return result.rows;
     }
 }

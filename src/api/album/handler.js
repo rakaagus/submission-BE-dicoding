@@ -28,14 +28,10 @@ class AlbumsHandler {
     async getAlbumByIdHandler(request, h){
         const { id } = request.params
         const album = await this._albumsService.getAlbumById(id)
-        const songs = await this._albumsService.getSongsInAlbum(id)
         return {
             status: 'success',
             data: {
-                album: {
-                    ...album,
-                    songs
-                },
+                album
             },
         };
     }

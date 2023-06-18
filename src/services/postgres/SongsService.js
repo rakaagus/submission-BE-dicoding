@@ -33,25 +33,25 @@ class SongsService {
 
         if(title && performer){
             query = {
-                text: "SELECT id, title, performer FROM songs LOWER(title) LIKE '%'||LOWER($1)||'%' AND LOWER(performer) LIKE '%'||LOWER($2)||'%'",
+                text: "SELECT id, title, performer FROM songs WHERE LOWER(title) LIKE '%'||LOWER($1)||'%' AND LOWER(performer) LIKE '%'||LOWER($2)||'%'",
                 values: [title, performer]
             }
         }else if(title){
             query = {
-                text: "SELECT id, title, performer FROM songs LOWER(title) LIKE '%'||LOWER($1)||'%'",
+                text: "SELECT id, title, performer FROM songs WHERE LOWER(title) LIKE '%'||LOWER($1)||'%'",
                 values: [title]
             }
         }else if(performer){
             query = {
-                text: "SELECT id, title, performer FROM songs LOWER(performer) LIKE '%'||LOWER($2)||'%'",
+                text: "SELECT id, title, performer FROM songs WHERE LOWER(title) LIKE '%'||LOWER($1)||'%'",
                 values: [performer]
             }
-        }else {
+        }else{
             query = {
                 text: "SELECT id, title, performer FROM songs",
             }
         }
-        
+
         const result = await this._pool.query(query)
         return result.rows;
     }

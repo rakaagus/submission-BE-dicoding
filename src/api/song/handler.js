@@ -25,7 +25,7 @@ class SongsHandler{
     }
 
     async getSongsHandler(request, h){
-        const {title, performer} = request.params
+        const { title, performer } = request.params
         const songs = await this._service.getSongs({title, performer})
         return {
             status: 'success',
