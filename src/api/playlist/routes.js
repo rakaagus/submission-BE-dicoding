@@ -17,7 +17,7 @@ const routes = (handler) => [
     },
     {
         method: 'DELETE',
-        path: '/playlists',
+        path: '/playlists/{id}',
         handler: handler.deletePlaylistHandler,
         options: {
             auth: "openmusik_jwt",

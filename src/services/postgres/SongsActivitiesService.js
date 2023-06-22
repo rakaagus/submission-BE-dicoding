@@ -10,12 +10,10 @@ class SongsActivitiesService {
     async addSongActivities(playlistId, songId, userId, action){
         const id = nanoid(16)
         const timeStamp = new Date().toISOString()
-        const updateAt = timeStamp
-        const createAt = timeStamp
 
         const query = {
-            text: 'INSERT INTO playlist_song_activities VALUES($1, $2, $3, $4, $5, $6, $7, $8) RETURNING id',
-            values: [id, playlistId, songId, userId, action, timeStamp, createAt, updateAt]
+            text: 'INSERT INTO playlist_song_activities VALUES($1, $2, $3, $4, $5, $6) RETURNING id',
+            values: [id, playlistId, songId, userId, action, timeStamp]
         }
 
         const result = await this._pool.query(query)
@@ -27,12 +25,12 @@ class SongsActivitiesService {
 
     async getSongActivites(id){
         const query = {
-            text: `SELECT users.username, songs.title, playlist_song_activities.action playlist_song_activities.time, FROM playlist_song_activities
+            text: `SELECT users.username, songs.title, playlist_song_activities.time, playlist_song_activities.action FROM playlist_song_activities
             INNER JOIN playlists ON playlists.id = playlist_song_activities.playlist_id
             INNER JOIN users ON users.id = playlist_song_activities.user_id
             INNER JOIN songs ON songs.id = playlist_song_activities.song_id
             WHERE playlist_song_activities.playlist_id = $1`,
-            values: [id]
+            values: [id],
         }
 
         const result = await this._pool.query(query)

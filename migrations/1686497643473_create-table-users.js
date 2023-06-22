@@ -28,4 +28,5 @@ exports.up = (pgm) => {
 
 exports.down = (pgm) => {
     pgm.dropTable('users');
+    pgm.dropConstraint('users', 'unique_username', 'UNIQUE(username)');
 };

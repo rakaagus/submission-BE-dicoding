@@ -25,12 +25,15 @@ exports.up = pgm => {
     */
     pgm.addConstraint('playlist_songs', 'unique_playlist_id_and_song_id', 'UNIQUE(playlist_id, song_id)');
     
-    // memberikan constraint foreign key pada kolom playlist_id dan song_id terhadap notes.id dan users.id
+    // memberikan constraint foreign key pada kolom playlist_id dan song_id terhadap playlists.id dan songs.id
     pgm.addConstraint('playlist_songs', 'fk_playlists_songs.playlist_id_playlists.id', 'FOREIGN KEY(playlist_id) REFERENCES playlists(id) ON DELETE CASCADE');
-    pgm.addConstraint('playlist_songs', 'fk_playlists_songs.song_id_songs.id', 'FOREIGN KEY(playlist_id) REFERENCES users(id) ON DELETE CASCADE');
+    pgm.addConstraint('playlist_songs', 'fk_playlists_songs.song_id_songs.id', 'FOREIGN KEY(song_id) REFERENCES songs(id) ON DELETE CASCADE');
 };
 
 exports.down = pgm => {
     // menghapus tabel playlists_songs
     pgm.dropTable('playlist_songs');
+    pgm.dropConstraint('playlist_songs', 'unique_playlist_id_and_song_id');
+    pgm.dropConstraint('playlist_songs', 'fk_playlists_songs.playlist_id_playlists.id');
+    pgm.dropConstraint('playlist_songs', 'fk_playlists_songs.song_id_songs.id');
 };

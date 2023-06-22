@@ -25,14 +25,6 @@ exports.up = pgm => {
             notNull: true,
         },
         time: {
-            type: 'INTEGER',
-            notNull: true,
-        },
-        created_at: {
-            type: 'TEXT',
-            notNull: true,
-        },
-        updated_at: {
             type: 'TEXT',
             notNull: true,
         },
@@ -44,4 +36,5 @@ exports.up = pgm => {
 
 exports.down = pgm => {
     pgm.dropTable('playlist_song_activities');
+    pgm.dropConstraint('playlist_song_activities', 'fk_playlist_song_activities.playlist_id_playlists.id');
 };
